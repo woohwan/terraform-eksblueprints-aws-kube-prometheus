@@ -1,0 +1,26 @@
+prometheus:
+  thanosService:
+    enabled: true
+
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: alb
+    annotations:
+      {
+        alb.ingress.kubernetes.io/scheme: "internet-facing",
+        alb.ingress.kubernetes.io/target-type: "ip",
+        alb.ingress.kubernetes.io/listen-ports: '[{"HTTP":80,"HTTPS": 443}]',
+        alb.ingress.kubernetes.io/backend-protocol: "HTTP",
+        alb.ingress.kubernetes.io/healthcheck-port: traffic-port,
+        alb.ingress.kubernetes.io/actions.ssl-redirect: "443",
+        alb.ingress.kubernetes.io/success-codes: "200,302",
+        alb.ingress.kubernetes.io/certificate-arn: ${certificate_arn},
+        alb.ingress.kubernetes.io/group.name: "monitoring-alb-group",
+      }
+
+    hosts:
+      - grafana.steve-aws.com
+    paths:
+      - /
+
