@@ -1,5 +1,7 @@
 locals {
 
+  s3_bucket_arn     = var.s3_bucket_arn
+
   name              = try(var.helm_config.name, "kube-prometheus-stack")
   namespace         = try(var.helm_config.namespace, local.name)
   service_account   = try(var.helm_config.service_account, "${local.name}-sa")
@@ -13,11 +15,8 @@ locals {
     name       = local.name
     chart      = local.name
     repository = "https://prometheus-community.github.io/helm-charts"
-    version    = "41.6.1"
+    version    = "44.3.0"
     namespace  = local.namespace
-    values = [templatefile("${path.module}/values.yaml", {
-      thanos_sidecar_objconfig_secret_name = kubernetes_secret_v1.prometheus_object_store_config.metadata[0].name
-    })]
     description = "kube-prometheus-stack helm Chart deployment configuration"
   }
 
@@ -25,6 +24,7 @@ locals {
     local.default_helm_config,
     var.helm_config
   )
+  
 
   irsa_config = {
     kubernetes_namespace                = local.helm_config["namespace"]

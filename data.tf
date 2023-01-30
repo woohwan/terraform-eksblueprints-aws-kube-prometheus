@@ -9,8 +9,8 @@ data "aws_iam_policy_document" "thanos_sidecar" {
       "s3:DeleteObject"
       ]
     resources = [
-      "${aws_s3_bucket.thanos.arn}",
-      "${aws_s3_bucket.thanos.arn}/*"
+      "${local.s3_bucket_arn}",
+      "${local.s3_bucket_arn}/*"
     ]
   }
 }

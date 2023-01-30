@@ -29,3 +29,9 @@ variable "irsa_iam_permissions_boundary" {
 variable "certificate_arn" {
   type = string
 }
+
+variable "service_account_name" {
+  type = string
+  description = "service account name for prometheus"
+  default = ""
+}

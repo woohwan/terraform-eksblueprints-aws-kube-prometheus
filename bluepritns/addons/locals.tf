@@ -1,8 +1,11 @@
 locals {
 
-  eks_oidc_issuer_url  = replace(data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer, "https://", "")
-  eks_cluster_endpoint = data.aws_eks_cluster.eks_cluster.endpoint
-  eks_cluster_version  = data.aws_eks_cluster.eks_cluster.version
+  namespace             = "kube-prometheus-stack"
+  service_account_name  = "${local.namespace}-prometheus-sa"
+
+  eks_oidc_issuer_url   = replace(data.aws_eks_cluster.eks_cluster.identity[0].oidc[0].issuer, "https://", "")
+  eks_cluster_endpoint  = data.aws_eks_cluster.eks_cluster.endpoint
+  eks_cluster_version   = data.aws_eks_cluster.eks_cluster.version
 
 
   addon_context = {

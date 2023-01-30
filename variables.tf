@@ -27,6 +27,11 @@ variable "addon_context" {
   })
 }
 
+variable "s3_bucket_arn" {
+  type = string
+  description = "thanos s3 bucket arn"
+}
+
 # variable "thanos_sidecar_objconfig_secret_name" {
 #   type = string
 #   default = ""
